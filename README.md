@@ -6,7 +6,9 @@ Basic jQuery slideshow. Can be applied to anything, and it will fade out the cur
 $('#bannerImages').slideshow({
 	timeout: 4500,
 	animDuration: 400,
-	itemList: '#bannerItems'
+	itemList: '#bannerItems',
+	nextItem: 'a#bannerNext',
+	prevItem: 'a#bannerPrev'
 });
 ```
 
