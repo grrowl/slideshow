@@ -4,15 +4,15 @@ Basic jQuery slideshow. Can be applied to anything, and it will fade out the cur
 
 ```javascript
 $('#bannerImages').slideshow({
-	timeout: 4500,
-	animDuration: 400,
+	timeout: 4500, 				/* time betweens slide transitions */
+	animDuration: 400,			/* crossfade duration */
 	itemList: '#bannerItems',
-	nextItem: 'a#bannerNext',
-	prevItem: 'a#bannerPrev'
+	nextItem: 'a#bannerNext',	/* selector or element to move to "next" when clicked */
+	prevItem: 'a#bannerPrev'	/* as above, but in reverse */
 });
 ```
 
-If itemList is set, it will append an ```<li>``` for each child of #bannerImages, and set the class "active" to the index matching the active banner image.
+If itemList is set, it will append an ```<li>``` for each child of #bannerImages, include ```<span>(number)</span>``` and set the class "active" to the index matching the active banner image.
 
 ```css
 ul#bannerImages {
