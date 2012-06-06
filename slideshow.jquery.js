@@ -10,7 +10,9 @@ Tom McKenzie <http://chillidonut.com/> <https://github.com/grrowl/>
 		defaults = {
 			timeout: 4500,
 			animDuration: 400,
-			itemList: ''
+			itemList: '',
+			prevElem: '',
+			nextElem: ''
 		};
 	
 	function Plugin( element, options ) {
@@ -19,6 +21,27 @@ Tom McKenzie <http://chillidonut.com/> <https://github.com/grrowl/>
         
         this._defaults = defaults;
         this._name = pluginName;
+        
+        var thisObj = this;
+        if (this.options.prevElem.length) {
+        	this.prevElem = $(this.options.prevElem);
+        	this.prevElem.click(function () {
+        		var nextIndex = thisObj.currentIndex - 1;
+        		if (nextIndex < 0) nextIndex += thisObj.element.children().length;
+        		
+        		thisObj.showItem(nextIndex);
+        		thisObj.tick(); // reset timer
+        		return false;
+        	});
+        }
+        if (this.options.nextElem.length) {
+        	this.nextElem = $(this.options.nextElem);
+        	this.nextElem.click(function () {
+        		thisObj.showItem((thisObj.currentIndex + 1) % thisObj.element.children().length);
+        		thisObj.tick();
+        		return false;
+        	});
+        }
         
         this.init();
 	}
@@ -31,7 +54,7 @@ Tom McKenzie <http://chillidonut.com/> <https://github.com/grrowl/>
 		this.itemList = jQuery(this.options.itemList);
 		var itemListHtml = '';
 		for(var i=0; i<this.element.children().length; i++) {
-			itemListHtml += '<li'+ (i == 0 ? ' class="active"' : '') +'></li>';
+			itemListHtml += '<li'+ (i == 0 ? ' class="active"' : '') +'><span>'+ (i+1) +'</span></li>';
 		}
 		this.itemList.append(itemListHtml);
 		this.itemList.children().click(function (ev) {
@@ -48,8 +71,9 @@ Tom McKenzie <http://chillidonut.com/> <https://github.com/grrowl/>
 			clearTimeout(this.timeoutId);
 
 		var thisObj = this; // fix scope
+		
 		this.timeoutId = setTimeout(function () { 	
-			thisObj.showItem.call(thisObj, (thisObj.currentIndex + 1) % thisObj.element.children().length); 
+			thisObj.showItem.call(thisObj, (thisObj.currentIndex + 1) % thisObj.element.children().length);
 		}, this.options.timeout);
 	}
 
