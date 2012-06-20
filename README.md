@@ -6,6 +6,7 @@ Basic jQuery slideshow. Can be applied to anything, and it will fade out the cur
 $('#bannerImages').slideshow({
 	timeout: 4500, 				/* time betweens slide transitions */
 	animDuration: 400,			/* crossfade duration */
+	startIndex:	0,				/* index of first slide */
 	itemList: '#bannerItems',
 	nextItem: 'a#bannerNext',	/* selector or element to move to "next" when clicked */
 	prevItem: 'a#bannerPrev'	/* as above, but in reverse */

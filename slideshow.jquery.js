@@ -10,6 +10,7 @@ Tom McKenzie <http://chillidonut.com/> <https://github.com/grrowl/>
 		defaults = {
 			timeout: 4500,
 			animDuration: 400,
+			startIndex : 0,
 			itemList: '',
 			prevElem: '',
 			nextElem: ''
@@ -47,14 +48,14 @@ Tom McKenzie <http://chillidonut.com/> <https://github.com/grrowl/>
 	}
 
 	Plugin.prototype.init = function () {
-		this.element.children().hide().first().show();
-		this.currentIndex = 0;
+		this.currentIndex = this.options.startIndex;
+		this.element.children().hide().eq(this.currentIndex).show();
 
 		var thisObj = this;
 		this.itemList = jQuery(this.options.itemList);
 		var itemListHtml = '';
 		for(var i=0; i<this.element.children().length; i++) {
-			itemListHtml += '<li'+ (i == 0 ? ' class="active"' : '') +'><span>'+ (i+1) +'</span></li>';
+			itemListHtml += '<li'+ (i == this.currentIndex ? ' class="active"' : '') +'><span>'+ (i+1) +'</span></li>';
 		}
 		this.itemList.append(itemListHtml);
 		this.itemList.children().click(function (ev) {
